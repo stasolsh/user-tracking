@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+ORIGIN=$(pwd)
+cd ../../
+
+docker-compose -p awin-user-tracking -f docker-compose.yml down
+cd "$ORIGIN"
