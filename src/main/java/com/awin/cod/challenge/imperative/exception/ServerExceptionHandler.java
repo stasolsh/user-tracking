@@ -13,8 +13,8 @@ public class ServerExceptionHandler {
 
     private static final String PUBLISHER_ID_AND_USER_ID_CANNOT_BE_NULL = "PublisherId and userId cannot be null.";
 
-    @ExceptionHandler(BusinesException.class)
-    public ResponseEntity<StandardError> illegalClientInput(BusinesException exc, HttpServletRequest req) {
+    @ExceptionHandler(BusinessException.class)
+    public ResponseEntity<StandardError> illegalClientInput(BusinessException exc, HttpServletRequest req) {
         HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;
         StandardError standardError = new StandardError(
                 Instant.now(), status.value(), PUBLISHER_ID_AND_USER_ID_CANNOT_BE_NULL, exc.getMessage(), req.getRequestURI()

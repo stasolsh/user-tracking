@@ -7,5 +7,6 @@ import java.util.Date;
 
 public interface ClickService {
     ClickDto saveClick(ClickDto click);
+
     ClickReportDto getReport(Date startDate, Date endDate);
 }

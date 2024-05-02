@@ -1,7 +1,7 @@
 package com.awin.cod.challenge.imperative.controller;
 
 import com.awin.cod.challenge.imperative.entity.ClickDto;
-import com.awin.cod.challenge.imperative.exception.BusinesException;
+import com.awin.cod.challenge.imperative.exception.BusinessException;
 import com.awin.cod.challenge.imperative.service.ClickService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -24,7 +24,7 @@ public class ClickController {
     public ResponseEntity<ClickDto> saveClick(@RequestBody ClickDto click) {
         log.info("Entering to ClickController.saveClick() called with payload: {}", click);
         if (click.getPublisherId() == null || click.getUserId() == null) {
-            throw new BusinesException("publisherId and userId cannot be null");
+            throw new BusinessException("publisherId or userId cannot be null");
         }
         return ResponseEntity.ok(clickService.saveClick(click));
     }

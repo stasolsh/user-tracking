@@ -8,6 +8,7 @@ import org.mapstruct.Mapping;
 @Mapper(componentModel = "spring")
 public interface ClickMapper {
     ClickDto toDto(Click click);
+
     @Mapping(target = "id", ignore = true)
     Click toEntity(ClickDto clickDto);
 }

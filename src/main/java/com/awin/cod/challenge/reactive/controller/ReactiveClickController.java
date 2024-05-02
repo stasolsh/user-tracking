@@ -2,7 +2,7 @@ package com.awin.cod.challenge.reactive.controller;
 
 import com.awin.cod.challenge.imperative.entity.Click;
 import com.awin.cod.challenge.imperative.entity.ClickDto;
-import com.awin.cod.challenge.imperative.exception.BusinesException;
+import com.awin.cod.challenge.imperative.exception.BusinessException;
 import com.awin.cod.challenge.reactive.service.ReactiveClickService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -25,7 +25,7 @@ public class ReactiveClickController {
     public Mono<Click> saveClick(@RequestBody ClickDto click) {
         log.info("Entering to ClickControllerReactive.saveClick() called with payload: {}", click);
         if (click.getPublisherId() == null || click.getUserId() == null) {
-            throw new BusinesException("publisherId and userId cannot be null");
+            throw new BusinessException("publisherId and userId cannot be null");
         }
         return reactiveClickService.saveClick(click);
     }

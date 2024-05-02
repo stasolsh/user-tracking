@@ -13,6 +13,7 @@ import java.util.Date;
 public class CustomReactiveClickRepositoryImpl implements CustomReactiveClickRepository {
 
     private final ReactiveMongoTemplate reactiveMongoTemplate;
+
     @Override
     public Flux<String> findUniqueUsersInRange(Date start, Date end) {
         Query query = new Query();

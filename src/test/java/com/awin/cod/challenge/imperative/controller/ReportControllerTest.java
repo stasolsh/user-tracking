@@ -1,7 +1,6 @@
 package com.awin.cod.challenge.imperative.controller;
 
 import com.awin.cod.challenge.imperative.entity.ClickReportDto;
-import com.awin.cod.challenge.imperative.exception.StandardError;
 import com.awin.cod.challenge.imperative.service.ClickService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -17,7 +16,6 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import java.util.Date;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
