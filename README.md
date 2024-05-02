@@ -4,12 +4,9 @@
 ## Table of Contents:
 
 🎯 [Objective](#-objective)  
-🏃 [Running the project](#-running-the-project)  
-📄 [Scripts](#-scripts)  
-🔍 [Visualizing Data](#-visualizing-data)   
-📚 [API Documentation](#-api-documentation)   
-🚧 [Troubleshooting](#-troubleshooting)
-
+🏃 [Running the project](#-running-the-project)
+📚 [API Documentation](#-api-documentation)
+🔍 [Visualizing Data](#-visualizing-data)
 
 ---
 ## 🎯 Objective
@@ -48,9 +45,9 @@ stop.bat
 
 and all your containers will be dropped and volumes will be removed.
 
-## 📄 Scripts
+## 📚 API Documentation
 
-Beyond `run.bat`/`run.sh` and `stop.bat`/`stop.sh`, we have other helper scripts:
+All endpoints were documented using Swagger 3 for Spring Boot 3. All you have to do is open [`http://localhost:8000/docs`](http://localhost:8000/docs) and give it a go.
 
 ## 🔍 Visualizing Data
 
@@ -60,7 +57,4 @@ MongoDB's service are not exposed at any port to the host machine, so you cannot
     - **User**: `admin`
     - **Password**: `pass`
 
-## 📚 API Documentation
-
-All endpoints were documented using Swagger 3 for Spring Boot 3. All you have to do is open [`http://localhost:8000/docs`](http://localhost:8000/docs) and give it a go.
 
