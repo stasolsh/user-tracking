@@ -69,13 +69,13 @@ public class ClickControllerTest {
                                 .content(clickDtoIn.write(WRONG_CLICK_DTO).getJson())
                                 .contentType(APPLICATION_JSON)
                                 .accept(APPLICATION_JSON))
-                .andExpect(status().is5xxServerError())
+                .andExpect(status().is4xxClientError())
                 .andReturn();
         StandardError result = errorJacksonTester.parseObject(mvcResult.getResponse().getContentAsString());
 
         assertNotNull(result);
         assertEquals(API_CLICKS, result.getPath());
         assertEquals(ERROR, result.getError());
-        assertEquals(HttpStatus.INTERNAL_SERVER_ERROR.value(), result.getStatus());
+        assertEquals(HttpStatus.PRECONDITION_FAILED.value(), result.getStatus());
     }
 }

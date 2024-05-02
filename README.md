@@ -4,8 +4,8 @@
 ## Table of Contents:
 
 🎯 [Objective](#-objective)  
-🏃 [Running the project](#-running-the-project)
-📚 [API Documentation](#-api-documentation)
+🏃 [Running the project](#-running-the-project)  
+📚 [API Documentation](#-api-documentation)  
 🔍 [Visualizing Data](#-visualizing-data)
 
 ---

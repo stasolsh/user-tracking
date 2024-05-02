@@ -15,7 +15,7 @@ public class ServerExceptionHandler {
 
     @ExceptionHandler(BusinessException.class)
     public ResponseEntity<StandardError> illegalClientInput(BusinessException exc, HttpServletRequest req) {
-        HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;
+        HttpStatus status = HttpStatus.PRECONDITION_FAILED;
         StandardError standardError = new StandardError(
                 Instant.now(), status.value(), PUBLISHER_ID_AND_USER_ID_CANNOT_BE_NULL, exc.getMessage(), req.getRequestURI()
         );
