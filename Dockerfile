@@ -2,7 +2,7 @@ FROM openjdk:17
 
 ENV JAVA_OPTS="-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:9890"
 
-ARG JAR_FILE=/target/awin-user-tracking.jar
+ARG JAR_FILE=/target/user-tracking.jar
 
 ADD ${JAR_FILE} application.jar
 

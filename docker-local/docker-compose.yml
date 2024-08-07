@@ -1,13 +1,13 @@
 version: '3.7'
 services:
-  awin-user-tracking:
+  user-tracking:
     build:
-      context: ./awin-user-tracking
+      context: ./user-tracking
       dockerfile: Dockerfile
     ports:
       - "8000:8000"
       - "9890:9890"
-    container_name: awin-user-tracking
+    container_name: user-tracking
     networks:
       - default
     depends_on:
