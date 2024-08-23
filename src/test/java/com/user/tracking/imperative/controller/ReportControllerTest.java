@@ -1,6 +1,5 @@
 package com.user.tracking.imperative.controller;
 
-import com.user.tracking.imperative.controller.ReportController;
 import com.user.tracking.imperative.entity.ClickReportDto;
 import com.user.tracking.imperative.service.ClickService;
 import org.junit.jupiter.api.Test;

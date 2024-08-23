@@ -1,6 +1,5 @@
 package com.user.tracking.imperative.controller;
 
-import com.user.tracking.imperative.controller.ClickController;
 import com.user.tracking.imperative.entity.ClickDto;
 import com.user.tracking.imperative.exception.StandardError;
 import com.user.tracking.imperative.service.ClickService;
