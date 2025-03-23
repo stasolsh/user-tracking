@@ -1,67 +1,49 @@
 package com.user.tracking.imperative.service;
 
-import com.user.tracking.imperative.entity.Click;
+import com.user.tracking.imperative.ApplicationTestConfiguration;
+import com.user.tracking.imperative.MongoDBTestContainerConfig;
 import com.user.tracking.imperative.entity.ClickDto;
-import com.user.tracking.imperative.entity.ClickReportDto;
-import com.user.tracking.imperative.mapper.ClickMapper;
 import com.user.tracking.imperative.repository.ClickRepository;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.boot.test.autoconfigure.data.mongo.DataMongoTest;
+import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.ContextConfiguration;
+import org.testcontainers.junit.jupiter.Testcontainers;
 
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
-import java.util.List;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Locale;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 
-@ExtendWith(SpringExtension.class)
+@DataMongoTest
+@Testcontainers
+@EnableAutoConfiguration
+@ContextConfiguration(classes = {MongoDBTestContainerConfig.class, ApplicationTestConfiguration.class})
+@ActiveProfiles("test")
 public class ClickServiceImplTest {
-    private static final Click CLICK_1 = new Click("6632464a3fa0c8762ea9eb7b", "1", "1", new GregorianCalendar(2014, Calendar.FEBRUARY, 11).getTime(), "description");
-    private static final Click CLICK_2 = new Click("5672464a3fa0c8762ea9eb7b", "2", "2", new GregorianCalendar(2014, Calendar.FEBRUARY, 11).getTime(), "description");
-    private static final ClickDto CLICK_DTO = new ClickDto("1", "1", "1", new GregorianCalendar(2014, Calendar.FEBRUARY, 11).getTime(), "description");
-    private static final int EXPECTED_TOTAL_CLICKS = 2;
-    private static final int EXPECTED_UNIQUE_USERS = 2;
-
-    @InjectMocks
-    private ClickServiceImpl clickServiceImpl;
-    @Mock
+    private static final SimpleDateFormat FORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ENGLISH);
+    @Autowired
+    private ClickServiceImpl clickService;
+    @Autowired
     private ClickRepository clickRepository;
-    @Mock
-    private ClickMapper clickMapper;
 
     @Test
-    public void shouldSaveClick() {
-        when(clickRepository.save(any(Click.class))).thenReturn(CLICK_1);
-        when(clickMapper.toEntity(any(ClickDto.class))).thenReturn(CLICK_1);
-        when(clickMapper.toDto(any(Click.class))).thenReturn(CLICK_DTO);
-
-        ClickDto result = clickServiceImpl.saveClick(CLICK_DTO);
-
-        assertEquals(result.getPublisherId(), CLICK_1.getPublisherId());
-        assertEquals(result.getUserId(), CLICK_1.getUserId());
-        assertEquals(result.getDescription(), CLICK_1.getDescription());
-        assertEquals(result.getTimestamp(), CLICK_1.getTimestamp());
-        verify(clickRepository).save(any(Click.class));
-        verify(clickMapper).toEntity(any(ClickDto.class));
-        verify(clickMapper).toDto(any(Click.class));
+    public void saveClick() throws ParseException {
+        //when
+        clickService.saveClick(new ClickDto("1", "10", "100", FORMAT.parse("2012-07-09 14:58:00.000000"), "description1"));
+        clickService.saveClick(new ClickDto("2", "20", "200", FORMAT.parse("2012-07-13 14:58:00.000000"), "description2"));
+        clickService.saveClick(new ClickDto("3", "30", "300", FORMAT.parse("2012-07-20 14:58:00.000000"), "description3"));
+        //then
+        assertEquals(2, clickService.getReport(FORMAT.parse("2012-07-10 14:58:00.000000"), FORMAT.parse("2012-07-21 14:58:00.000000")).getUniqueUsers());
+        assertEquals(2, clickService.getReport(FORMAT.parse("2012-07-10 14:58:00.000000"), FORMAT.parse("2012-07-21 14:58:00.000000")).getTotalClicks());
     }
 
-    @Test
-    public void shouldGetReport() {
-        when(clickRepository.getClicksBetweenDates(any(Date.class), any(Date.class))).thenReturn(List.of(CLICK_1, CLICK_2));
-        when(clickRepository.findUniqueUsersInRange(any(Date.class), any(Date.class))).thenReturn(EXPECTED_TOTAL_CLICKS);
-
-        ClickReportDto result = clickServiceImpl.getReport(new GregorianCalendar(2015, Calendar.FEBRUARY, 11).getTime(),
-                new GregorianCalendar(2020, Calendar.FEBRUARY, 11).getTime());
-
-        assertEquals(EXPECTED_TOTAL_CLICKS, result.getTotalClicks());
-        assertEquals(EXPECTED_UNIQUE_USERS, result.getUniqueUsers());
+    @AfterEach
+    void tearDown() {
+        clickRepository.deleteAll();
     }
 }
