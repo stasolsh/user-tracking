@@ -11,6 +11,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.json.JacksonTester;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpStatus;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
@@ -29,6 +30,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @ExtendWith(SpringExtension.class)
 @WebMvcTest(ClickController.class)
 @AutoConfigureJsonTesters
+@ActiveProfiles("test")
 public class ClickControllerTest {
     private static final String API_CLICKS = "/api/v1/clicks/record";
     private static final ClickDto CLICK_DTO = new ClickDto("1", "1", "1", new GregorianCalendar(2014, Calendar.FEBRUARY, 11).getTime(), "description");
